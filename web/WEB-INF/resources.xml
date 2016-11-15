@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <Resource id="workshopI5" type="javax.sql.DataSource">#Tue Nov 15 11:13:06 CET 2016
+        jdbcDriver=com.mysql.jdbc.Driver
+        password=pass
+        userName=root
+        jdbcUrl=jdbc\:mysql\://localhost\:3306/workshopI5?zeroDateTimeBehavior\=convertToNull
+    </Resource>
+</resources>
