@@ -61,17 +61,25 @@ public class EntityUserFacadeREST extends AbstractFacade<EntityUser> {
     public Response _create(EntityUser entity) {
 
         try {
-            super.create(entity);
 
-        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException nre) {
-            return Response.status(405).build();
+            this.em.createQuery("select o from EntityUser as o where o.entityEmail = :email")
+                    .setParameter("email", entity.getEntityEmail())
+                    .getSingleResult();
+
         } catch (java.lang.Exception e) {
 
+            try {
+                super.create(entity);
+                return Response.ok().entity(entity).build();
+            } catch (Exception ex) {
+                e.printStackTrace();
+            }
             e.printStackTrace();
+
             return Response.status(400).build();
         }
 
-        return Response.ok().entity(entity).build();
+        return Response.status(405).build();
     }
 
     @PUT

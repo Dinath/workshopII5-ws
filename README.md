@@ -114,6 +114,8 @@ http://localhost:8080/WorkshopI5/ws/user
   }
 ~~~
 
+Returns **405 code** if the mail address is already used.
+
 The ```POST``` returns the same JSON with its **ID**.
 
 #### POST for Trip

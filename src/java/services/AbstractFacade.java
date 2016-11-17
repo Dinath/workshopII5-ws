@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -23,7 +24,11 @@ public abstract class AbstractFacade<T> {
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) throws Exception {
-        getEntityManager().persist(entity);
+        try {
+            getEntityManager().persist(entity);
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
 
     public void edit(T entity) throws Exception {
