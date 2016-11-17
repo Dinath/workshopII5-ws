@@ -63,6 +63,8 @@ public class EntityUserFacadeREST extends AbstractFacade<EntityUser> {
         try {
             super.create(entity);
 
+        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException nre) {
+            return Response.status(405).build();
         } catch (java.lang.Exception e) {
 
             e.printStackTrace();

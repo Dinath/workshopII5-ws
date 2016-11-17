@@ -70,9 +70,9 @@ http://localhost:8080/WorkshopI5/ws/user/{id}
     "name": "root",
     "first-name": "root",
     "password": "H\u0013IM\u0013~\u00161��\u0001լ�n{��t�\u0011��VV^�\u001dsvw�",
-    "date-creation": "2016-11-15T15:48:12.941+01:00",
+    "date-creation": "2016-11-17",
     "phone-number": "06-07-88-99-14",
-    "date-birthday": "2016-11-15T15:48:12.941+01:00"
+    "date-birthday": "2016-11-17"
   }
 ]
 ~~~
@@ -106,8 +106,7 @@ http://localhost:8080/WorkshopI5/ws/user
 
 ~~~
 {
-    "date-birthday": 1479373361345,
-    "date-creation": 1479373361345,
+    "date-birthday": "2016-10-19",
     "email": "alex@root-8.org",
     "first-name": "alex",
     "name": "alex",
@@ -125,7 +124,7 @@ Only needs **ID** for User's fields.
 {
     "address-from": "Odyseum, Montpellier",
     "address-to": "Gare du Nord, Paris",
-    "date-creation": 1479374184474,
+    "date-creation": "2016-11-17",
     "date-from": null,
     "date-to": null,
     "description": "Description...",
@@ -153,8 +152,8 @@ http://localhost:8080/WorkshopI5/ws/user
 ~~~
 {
     "id": 6,
-    "date-birthday": 1479373361345,
-    "date-creation": 1479373361345,
+    "date-birthday": "2016-11-17",
+    "date-creation": "2016-11-17",
     "email": "alex@root-8.org",
     "first-name": "alex",
     "name": "alex",
