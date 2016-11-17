@@ -24,6 +24,7 @@ public class FilterHeader implements ContainerResponseFilter {
         responseContext.getHeaders().putSingle("Access-Control-Allow-Credentials", "true");
         responseContext.getHeaders().putSingle("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
         responseContext.getHeaders().putSingle("Access-Control-Allow-Headers", "Content-Type, Accept");
+//        responseContext.getHeaders().putSingle("Content-Type", "application/json");
     }
 
 }

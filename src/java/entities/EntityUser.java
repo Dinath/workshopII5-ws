@@ -54,6 +54,7 @@ public class EntityUser implements Serializable {
     private String entityNumberPhone;
 
     @Temporal(TemporalType.DATE)
+    @XmlJavaTypeAdapter(DateAdapter.class)
     @XmlElement(name = "date-birthday")
     private Date entityDateBirthday;
 

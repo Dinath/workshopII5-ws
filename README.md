@@ -121,7 +121,13 @@ The ```POST``` returns the same JSON with its **ID**.
 
 #### POST for Trip
 
-Only needs **ID** for User's fields.
+Only needs **ID** for *User* fields.
+
+```
+http://localhost:8080/WorkshopI5/ws/trip
+```
+
+For **PUT**, add the Trip ID.
 
 ~~~
 {
@@ -148,6 +154,8 @@ Only needs **ID** for User's fields.
 
 
 ### PUT
+
+**DO NOT FORGET TO PUT THE ID.**
 
 ```
 http://localhost:8080/WorkshopI5/ws/user
@@ -198,9 +206,30 @@ http://localhost:8080/WorkshopI5/ws/trip/best-price/1
 http://localhost:8080/WorkshopI5/ws/trip/best-price/0
 ~~~
 
+### Trips available by PLACE, DEPART DATE and PRICE MIN / MAX
+
+```POST``` the JSON code on.
+
+~~~
+http://localhost:8080/WorkshopI5/ws/trip/with-params
+~~~
+
+~~~
+{
+    "place": "Paris",
+    "dateFrom": "2016-11-17",
+    "priceMin": 20,
+    "priceMax": 25
+}
+~~~
+
 ### Trips available by PLACE and DEPART DATE
 
-```POST``` a JSON code with proper informations : based on the **destination date**.
+```POST``` a JSON code on the followin URL with proper informations : based on the **destination date**.
+
+```
+http://localhost:8080/WorkshopI5/ws/trip/available
+```
 
 ~~~
 {

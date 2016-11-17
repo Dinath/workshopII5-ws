@@ -41,6 +41,9 @@ public class EntityTrip implements Serializable {
     @XmlTransient
     private boolean entityTripComplete = false;
 
+    @XmlElement(name = "img")
+    private String entityImage;
+
     @XmlElement(name = "name")
     private String entityName;
 
@@ -312,6 +315,20 @@ public class EntityTrip implements Serializable {
      */
     public void setEntityDateCreation(Date entityDateCreation) {
         this.entityDateCreation = entityDateCreation;
+    }
+
+    /**
+     * @return the entityImage
+     */
+    public String getEntityImage() {
+        return entityImage;
+    }
+
+    /**
+     * @param entityImage the entityImage to set
+     */
+    public void setEntityImage(String entityImage) {
+        this.entityImage = entityImage;
     }
 
 }

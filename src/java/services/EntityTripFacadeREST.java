@@ -22,6 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import utils.CustomTrip;
 
 /**
  *
@@ -38,6 +39,40 @@ public class EntityTripFacadeREST extends AbstractFacade<EntityTrip> {
         super(EntityTrip.class);
     }
 
+    @POST
+    @Path("with-params")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listOfTripsFromPlaceDateTo(CustomTrip json) {
+
+        List<EntityTrip> trips = new ArrayList<>();
+
+        try {
+            trips = this.em.createQuery("select o from EntityTrip as o where "
+                    + "o.numberOfParticiper > o.numberOfUsersInside and "
+                    + "o.entityAddressTo like :place and "
+                    + "o.entityDateTo = :date and "
+                    + "o.amountOfTrip >= :priceMin and "
+                    + "o.amountOfTrip <= :priceMax"
+            )
+                    .setParameter("place", "%" + json.getPlace() + "%")
+                    .setParameter("date", json.getDateFrom(), TemporalType.DATE)
+                    .setParameter("priceMin", json.getPriceMin())
+                    .setParameter("priceMax", json.getPriceMax())
+                    .getResultList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(400).build();
+        }
+
+        if (trips.size() > 0) {
+            return Response.ok().entity(trips).build();
+        } else {
+            return Response.status(404).build();
+        }
+    }
+
     @GET
     @Path("best-price/{i}")
     @Consumes(MediaType.TEXT_PLAIN)
@@ -49,13 +84,13 @@ public class EntityTripFacadeREST extends AbstractFacade<EntityTrip> {
 
             switch (i) {
                 case "0":
-                    price = (Double) this.em.createQuery("select o.amountOfTrip / o.numberOfParticiper from EntityTrip as o ORDER BY o.amountOfTrip / o.numberOfParticiper desc")
+                    price = (Double) this.em.createQuery("select o.amountOfTrip / o.numberOfParticiper from EntityTrip as o where o.numberOfParticiper > o.numberOfUsersInside ORDER BY o.amountOfTrip / o.numberOfParticiper desc")
                             .setMaxResults(1)
                             .getSingleResult();
                     break;
 
                 case "1":
-                    price = (Double) this.em.createQuery("select o.amountOfTrip / o.numberOfParticiper from EntityTrip as o ORDER BY o.amountOfTrip / o.numberOfParticiper asc")
+                    price = (Double) this.em.createQuery("select o.amountOfTrip / o.numberOfParticiper from EntityTrip as o where o.numberOfParticiper > o.numberOfUsersInside ORDER BY o.amountOfTrip / o.numberOfParticiper asc")
                             .setMaxResults(1)
                             .getSingleResult();
                     break;
@@ -73,7 +108,7 @@ public class EntityTripFacadeREST extends AbstractFacade<EntityTrip> {
         return Response.ok().entity(price).build();
     }
 
-    @POST
+    @GET
     @Path("order-price/{i}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response listOfTripsLowerPrice(@PathParam("i") String i) {
@@ -84,11 +119,11 @@ public class EntityTripFacadeREST extends AbstractFacade<EntityTrip> {
 
             switch (i) {
                 case "0":
-                    trips = this.em.createQuery("select o from EntityTrip as o ORDER BY o.amountOfTrip / o.numberOfParticiper desc").getResultList();
+                    trips = this.em.createQuery("select o from EntityTrip as o where o.numberOfParticiper > o.numberOfUsersInside ORDER BY o.amountOfTrip / o.numberOfParticiper desc").getResultList();
                     break;
 
                 case "1":
-                    trips = this.em.createQuery("select o from EntityTrip as o ORDER BY o.amountOfTrip / o.numberOfParticiper asc").getResultList();
+                    trips = this.em.createQuery("select o from EntityTrip as o where o.numberOfParticiper > o.numberOfUsersInside ORDER BY o.amountOfTrip / o.numberOfParticiper asc").getResultList();
                     break;
 
                 default:
@@ -112,7 +147,10 @@ public class EntityTripFacadeREST extends AbstractFacade<EntityTrip> {
         List<EntityTrip> trips = new ArrayList<>();
 
         try {
-            trips = this.em.createQuery("select o from EntityTrip as o where o.entityAddressTo like :country and o.entityDateTo = :date")
+            trips = this.em.createQuery("select o from EntityTrip as o where "
+                    + "o.numberOfParticiper > o.numberOfUsersInside and "
+                    + "o.entityAddressTo like :country and "
+                    + "o.entityDateTo = :date")
                     .setParameter("country", "%" + trip.getEntityAddressTo() + "%")
                     .setParameter("date", trip.getEntityDateTo(), TemporalType.DATE)
                     .getResultList();

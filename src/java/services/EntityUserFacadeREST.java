@@ -56,8 +56,8 @@ public class EntityUserFacadeREST extends AbstractFacade<EntityUser> {
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Response _create(EntityUser entity) {
 
         try {
@@ -82,7 +82,7 @@ public class EntityUserFacadeREST extends AbstractFacade<EntityUser> {
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response _edit(EntityUser entity) {
 
         try {
@@ -135,7 +135,7 @@ public class EntityUserFacadeREST extends AbstractFacade<EntityUser> {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Response _findAll() {
 
         try {

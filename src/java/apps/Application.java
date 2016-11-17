@@ -55,6 +55,10 @@ public class Application implements Serializable {
      */
     public void test() throws Exception {
 
+        if (this.entityUserFacadeREST.count() > 0) {
+            return;
+        }
+
         // loading test
         M.debug("Application.test", "Loading tests...");
 
