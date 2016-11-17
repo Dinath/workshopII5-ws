@@ -38,6 +38,41 @@ public class EntityTripFacadeREST extends AbstractFacade<EntityTrip> {
         super(EntityTrip.class);
     }
 
+    @GET
+    @Path("best-price/{i}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response countOfTripPrice(@PathParam("i") String i) {
+
+        Double price = null;
+
+        try {
+
+            switch (i) {
+                case "0":
+                    price = (Double) this.em.createQuery("select o.amountOfTrip / o.numberOfParticiper from EntityTrip as o ORDER BY o.amountOfTrip / o.numberOfParticiper desc")
+                            .setMaxResults(1)
+                            .getSingleResult();
+                    break;
+
+                case "1":
+                    price = (Double) this.em.createQuery("select o.amountOfTrip / o.numberOfParticiper from EntityTrip as o ORDER BY o.amountOfTrip / o.numberOfParticiper asc")
+                            .setMaxResults(1)
+                            .getSingleResult();
+                    break;
+
+                default:
+                    break;
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(400).build();
+        }
+
+        return Response.ok().entity(price).build();
+    }
+
     @POST
     @Path("order-price/{i}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -49,11 +84,11 @@ public class EntityTripFacadeREST extends AbstractFacade<EntityTrip> {
 
             switch (i) {
                 case "0":
-                    trips = this.em.createQuery("select o from EntityTrip as o ORDER BY o.numberOfParticiper / o.amountOfTrip desc").getResultList();
+                    trips = this.em.createQuery("select o from EntityTrip as o ORDER BY o.amountOfTrip / o.numberOfParticiper desc").getResultList();
                     break;
 
                 case "1":
-                    trips = this.em.createQuery("select o from EntityTrip as o ORDER BY o.numberOfParticiper / o.amountOfTrip asc").getResultList();
+                    trips = this.em.createQuery("select o from EntityTrip as o ORDER BY o.amountOfTrip / o.numberOfParticiper asc").getResultList();
                     break;
 
                 default:

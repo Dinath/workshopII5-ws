@@ -110,6 +110,7 @@ http://localhost:8080/WorkshopI5/ws/user
     "email": "alex@root-8.org",
     "first-name": "alex",
     "name": "alex",
+    "password": "root",
     "phone-number": "06-07-88-99-14"
   }
 ~~~
@@ -180,6 +181,22 @@ Ordered by **lower price**.
 ```
 http://localhost:8080/WorkshopI5/ws/trip/order-price/1
 ```
+
+### Lower / Higher trip price
+
+```GET``` it from this URL, simple **TEXT**.
+
+#### Lower
+
+~~~
+http://localhost:8080/WorkshopI5/ws/trip/best-price/1
+~~~
+
+#### Higher
+
+~~~
+http://localhost:8080/WorkshopI5/ws/trip/best-price/0
+~~~
 
 ### Trips available by PLACE and DEPART DATE
 

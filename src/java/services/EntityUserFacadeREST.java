@@ -72,9 +72,8 @@ public class EntityUserFacadeREST extends AbstractFacade<EntityUser> {
                 super.create(entity);
                 return Response.ok().entity(entity).build();
             } catch (Exception ex) {
-                e.printStackTrace();
+                ex.printStackTrace();
             }
-            e.printStackTrace();
 
             return Response.status(400).build();
         }
