@@ -6,10 +6,8 @@
 package services;
 
 import entities.EntityUser;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -49,7 +47,7 @@ public class EntityUserFacadeREST extends AbstractFacade<EntityUser> {
                     .setParameter("email", entity.getEntityEmail())
                     .setParameter("password", M.passwordEncode(entity.getEntityPassword()))
                     .getSingleResult();
-        } catch (NoResultException e) {
+        } catch (Exception e) {
 
             return Response.status(404).build();
         }
@@ -58,51 +56,100 @@ public class EntityUserFacadeREST extends AbstractFacade<EntityUser> {
     }
 
     @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void create(EntityUser entity) {
-        super.create(entity);
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response _create(EntityUser entity) {
+
+        try {
+            super.create(entity);
+
+        } catch (java.lang.Exception e) {
+
+            e.printStackTrace();
+            return Response.status(400).build();
+        }
+
+        return Response.ok().entity(entity).build();
     }
 
     @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, EntityUser entity) {
-        super.edit(entity);
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response _edit(EntityUser entity) {
+
+        try {
+            super.edit(entity);
+
+        } catch (java.lang.Exception e) {
+
+            e.printStackTrace();
+            return Response.status(400).build();
+        }
+
+        return Response.ok().status(200).build();
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        super.remove(super.find(id));
+    public Response _remove(@PathParam("id") Long id) {
+
+        try {
+            super.remove(super.find(id));
+
+        } catch (java.lang.Exception e) {
+
+            e.printStackTrace();
+            return Response.status(400).build();
+        }
+
+        return Response.ok().status(200).build();
     }
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public EntityUser find(@PathParam("id") Long id) {
-        return super.find(id);
+    public Response find(@PathParam("id") Long id) {
+
+        try {
+
+            EntityUser entity = super.find(id);
+
+            if (entity != null) {
+                return Response.ok().entity(entity).build();
+            } else {
+                return Response.status(404).build();
+            }
+
+        } catch (java.lang.Exception e) {
+
+            e.printStackTrace();
+            return Response.status(400).build();
+        }
     }
 
     @GET
-    @Override
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<EntityUser> findAll() {
-        return super.findAll();
-    }
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response _findAll() {
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<EntityUser> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        try {
+            return Response.ok().entity(super.findAll()).build();
+
+        } catch (java.lang.Exception e) {
+
+            e.printStackTrace();
+            return Response.status(400).build();
+        }
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
+    public Response countREST() {
+
+        try {
+            return Response.ok().entity(super.count()).build();
+        } catch (java.lang.Exception e) {
+            e.printStackTrace();
+            return Response.status(400).build();
+        }
     }
 
     @Override

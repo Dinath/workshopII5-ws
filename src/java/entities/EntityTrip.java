@@ -21,6 +21,9 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import utils.DateAdapter;
 
 /**
  *
@@ -32,8 +35,11 @@ public class EntityTrip implements Serializable {
 
     private static long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @XmlTransient
+    private boolean entityTripComplete = false;
 
     @XmlElement(name = "name")
     private String entityName;
@@ -41,16 +47,19 @@ public class EntityTrip implements Serializable {
     @XmlElement(name = "description")
     private String entityDescription;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    @Temporal(TemporalType.DATE)
     @XmlElement(name = "date-creation")
-    private final Date entityDateCreation = new Date();
+    private Date entityDateCreation = new Date();
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
     @XmlElement(name = "date-from")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date entityDateFrom;
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
     @XmlElement(name = "date-to")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date entityDateTo;
 
     @XmlElement(name = "user-organizer")
@@ -58,7 +67,7 @@ public class EntityTrip implements Serializable {
     private EntityUser entityUserOrganizer;
 
     @XmlElement(name = "users-participer")
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<EntityUser> entityUsersParticiper = new ArrayList<>();
 
     @XmlElement(name = "price")
@@ -282,6 +291,27 @@ public class EntityTrip implements Serializable {
      */
     public void setEntityAddressTo(String entityAddressTo) {
         this.entityAddressTo = entityAddressTo;
+    }
+
+    /**
+     * @return the entityTripComplete
+     */
+    public boolean isEntityTripComplete() {
+        return entityTripComplete;
+    }
+
+    /**
+     * @param entityTripComplete the entityTripComplete to set
+     */
+    public void setEntityTripComplete(boolean entityTripComplete) {
+        this.entityTripComplete = entityTripComplete;
+    }
+
+    /**
+     * @param entityDateCreation the entityDateCreation to set
+     */
+    public void setEntityDateCreation(Date entityDateCreation) {
+        this.entityDateCreation = entityDateCreation;
     }
 
 }

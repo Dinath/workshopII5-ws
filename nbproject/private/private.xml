@@ -5,12 +5,8 @@
         <group>
             <file>file:/home/alex/NetBeansProjects/WorkshopI5/src/java/services/EntityTripFacadeREST.java</file>
             <file>file:/home/alex/NetBeansProjects/WorkshopI5/src/java/services/EntityUserFacadeREST.java</file>
-            <file>file:/home/alex/NetBeansProjects/WorkshopI5/src/java/services/ApplicationConfig.java</file>
-            <file>file:/home/alex/NetBeansProjects/WorkshopI5/src/java/utils/M.java</file>
-            <file>file:/home/alex/NetBeansProjects/WorkshopI5/src/java/services/AbstractFacade.java</file>
+            <file>file:/home/alex/NetBeansProjects/WorkshopI5/src/java/apps/Application.java</file>
             <file>file:/home/alex/NetBeansProjects/WorkshopI5/src/java/entities/EntityUser.java</file>
-            <file>file:/home/alex/NetBeansProjects/WorkshopI5/src/java/entities/EntityTrip.java</file>
-            <file>file:/home/alex/NetBeansProjects/WorkshopI5/web/index.html</file>
         </group>
     </open-files>
 </project-private>

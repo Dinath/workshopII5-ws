@@ -7,20 +7,18 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import utils.DateAdapter;
 
 /**
  *
@@ -31,8 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class EntityUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @XmlTransient
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
@@ -48,7 +45,8 @@ public class EntityUser implements Serializable {
     @XmlElement(name = "password")
     private String entityPassword;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
+    @XmlJavaTypeAdapter(DateAdapter.class)
     @XmlElement(name = "date-creation")
     private Date entityDateCreation = new Date();
 
@@ -58,10 +56,6 @@ public class EntityUser implements Serializable {
     @Temporal(TemporalType.DATE)
     @XmlElement(name = "date-birthday")
     private Date entityDateBirthday;
-
-    @XmlElement(name = "trips")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "entityUserOrganizer")
-    private List<EntityTrip> entityTrips;
 
     public Long getId() {
         return id;
@@ -192,21 +186,6 @@ public class EntityUser implements Serializable {
      */
     public void setEntityDateCreation(Date entityDateCreation) {
         this.entityDateCreation = entityDateCreation;
-    }
-
-    /**
-     * @return the entityTrips
-     */
-    @XmlTransient
-    public List<EntityTrip> getEntityTrips() {
-        return entityTrips;
-    }
-
-    /**
-     * @param entityTrips the entityTrips to set
-     */
-    public void setEntityTrips(List<EntityTrip> entityTrips) {
-        this.entityTrips = entityTrips;
     }
 
 }

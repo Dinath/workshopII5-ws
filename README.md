@@ -42,7 +42,16 @@ You just need to [deploy the project through GlassFish](http://blog.security-hel
 
 # JSON Webservice
 
+Returns **200** if it is OK, **400** otherwise. 
 
+On *creation / connection*, return the whole JSON entity.
+
+Two routes are available.
+
+~~~
+http://localhost:8080/WorkshopI5/ws/trip/
+http://localhost:8080/WorkshopI5/ws/user/
+~~~
 
 ## EntityUser.java "user"
 
@@ -63,11 +72,125 @@ http://localhost:8080/WorkshopI5/ws/user/{id}
     "password": "H\u0013IM\u0013~\u00161��\u0001լ�n{��t�\u0011��VV^�\u001dsvw�",
     "date-creation": "2016-11-15T15:48:12.941+01:00",
     "phone-number": "06-07-88-99-14",
-    "date-birthday": "2016-11-15T15:48:12.941+01:00",
-    "trips": []
+    "date-birthday": "2016-11-15T15:48:12.941+01:00"
   }
 ]
 ~~~
+
+
+### DELETE
+
+**Optional** : Delete an entity.
+
+```
+http://localhost:8080/WorkshopI5/ws/user/{id}
+```
+
+Returns the JSON code for entity or 404 not found.
+
+### GET by ID
+
+**Optional** : use and ID to get a specified user.
+
+```
+http://localhost:8080/WorkshopI5/ws/user/{id}
+```
+
+Returns the JSON code for entity or 404 not found.
+
+### POST
+
+```
+http://localhost:8080/WorkshopI5/ws/user
+```
+
+~~~
+{
+    "date-birthday": 1479373361345,
+    "date-creation": 1479373361345,
+    "email": "alex@root-8.org",
+    "first-name": "alex",
+    "name": "alex",
+    "phone-number": "06-07-88-99-14"
+  }
+~~~
+
+The ```POST``` returns the same JSON with its **ID**.
+
+#### POST for Trip
+
+Only needs **ID** for User's fields.
+
+~~~
+{
+    "address-from": "Odyseum, Montpellier",
+    "address-to": "Gare du Nord, Paris",
+    "date-creation": 1479374184474,
+    "date-from": null,
+    "date-to": null,
+    "description": "Description...",
+    "name": "davy trip",
+    "number-insiders": 2,
+    "number-participers": 10,
+    "price": 20,
+    "user-organizer": {
+      "id": 1
+    },
+    "users-participer": [
+      {
+      "id": 1
+      }
+    ]
+  }
+~~~
+
+
+### PUT
+
+```
+http://localhost:8080/WorkshopI5/ws/user
+```
+~~~
+{
+    "id": 6,
+    "date-birthday": 1479373361345,
+    "date-creation": 1479373361345,
+    "email": "alex@root-8.org",
+    "first-name": "alex",
+    "name": "alex",
+    "phone-number": "06-07-88-99-14"
+  }
+~~~
+
+## Custom routes
+
+We can **GET / POST** on custom routes.
+
+### Trips by higher / lower price
+
+Ordered by **higher price**.
+
+```
+http://localhost:8080/WorkshopI5/ws/trip/order-price/0
+```
+
+Ordered by **lower price**.
+
+```
+http://localhost:8080/WorkshopI5/ws/trip/order-price/1
+```
+
+### Trips available by PLACE and DEPART DATE
+
+```POST``` a JSON code with proper informations : based on the **destination date**.
+
+~~~
+{
+	"address-to": "Paris",
+	"date-to": "2016-11-17"
+}
+~~~
+
 
 ### User connection
 
